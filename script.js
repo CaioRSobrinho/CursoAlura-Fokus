@@ -16,7 +16,7 @@ const somPlay = new Audio('/sons/play.wav')
 const somPause = new Audio('/sons/pause.mp3')
 const somFinalizado = new Audio('/sons/beep.mp3')
 
-let tempoDecorridoEmSegundos = 1500
+let tempoDecorridoEmSegundos = 1
 let intervaloId = null
 
 musica.loop = true
@@ -81,6 +81,11 @@ function alterarContexto (contexto) {
 const contagemRegressica = () => {
     if (tempoDecorridoEmSegundos <=0){
         somFinalizado.play()
+        const focoAtivo = html.getAttribute('data-contexto') == 'foco'
+        if (focoAtivo) {
+            const evento = new CustomEvent('FocoFinalizado')
+            document.dispatchEvent(evento)
+        }
         zerar()
         return
     }
